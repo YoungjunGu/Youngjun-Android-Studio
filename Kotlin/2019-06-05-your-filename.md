@@ -1,3 +1,0 @@
-# Kotlin
-
-- Kotlin basic
