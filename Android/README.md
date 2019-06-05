@@ -32,3 +32,6 @@
 
 <br>
 
+## Android Memory Management  
+
+
