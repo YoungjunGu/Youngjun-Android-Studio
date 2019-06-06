@@ -19,6 +19,14 @@
 
 </br>
 
+## Android Kotlin Basic
+
+- [Intent](https://github.com/gaki2745/Youngjun-Android-Studio/tree/master/Android/IntentPractice)
+- [Toast](https://github.com/gaki2745/Youngjun-Android-Studio/tree/master/Android/IntentPractice)
+- [SharedPreference](https://github.com/gaki2745/Youngjun-Android-Studio/tree/master/Android/IntentPractice)
+
+</br>
+
 ## Android Component
 
 </br>
