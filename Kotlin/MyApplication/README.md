@@ -3,7 +3,7 @@
 
 ## Kotlin 이란?
 
-IntelliJ를 만든 [JetBrains](https://www.jetbrains.com)이 만든 언어이다.  
+IntelliJ를 만든 [JetBrains](https://www.jetbrains.com)가 개발한 언어이다.  
 기존의 안드로이드 스튜디오는 자바 6기반으로 개발 하였고 이러한 문제점들을 구글이 Kotlin을 공식 언어로 채택하면서 해결되었다.  
 
 Kotlin을 사용하면 다음과 같은 이점이있다.  
