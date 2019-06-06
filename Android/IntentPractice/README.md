@@ -1,4 +1,4 @@
-## Intent
+# Intent
 
 kotlin에서 화면을 전환할때는 `Anko` 라이브러리를 사용하면 기존의 Intent 방식보다 조금 더 간단한 방식을 제공하고 있다.  
 
@@ -49,7 +49,7 @@ val age = intent.getStringExtra("age").toInt
 
 </br>
 
-## Toast
+# Toast
 
 - 기존의 방식
 
@@ -65,7 +65,7 @@ toast("출력할 contents")
 
 </br>
 
-## SharedPreference로 데이터 저장
+# SharedPreference로 데이터 저장
 
 앱을 종료해도 마지막에 저장했던 데이터값을 남이있게 하는 기능을 구현하기 위해 사용한다.  
 설정과 같이 **간단한 데이터 저장** 할때 주로 사용한다.  
