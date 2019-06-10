@@ -43,14 +43,24 @@ fun main(args: Array<String>) {
   val stringInput = readLine()!!
   println("입력한 문자열 :  &{stringInput}")
 }
-```  
+``` 
+
+- 출력  
+	$를 사용하여 문자열 내부에서 if else를 사용하여 출력또한 제어를 하고 있다.  
+    
+```kotlin
+var airPollution = 50
+println("${if(airPollution >= 50) "나쁨"  else "보통"}")
+```
 
 #### 자료형 및 변수,상수 선언  
 
 - var : 변수 (값의 변경이 가능)
-- val : 상수 (값의 변경이 불가능 (Java의 final))
+- val : 상수 ('value', 값의 변경이 불가능 (Java의 final), Read-Only)
+- const val : 값이 절대 변경 되지 않음을 컴파일러 에게 알린다.  
 
 ```kotlin
+const val MAX_VALUE = 1000
 var a: Int = 3
 var b = 5	// 자동 형추론 (=Int)
 
@@ -133,7 +143,76 @@ data = 10
 data = "String형 자료로!"
 ```
 
-단 위와 같이 하게 될경우 새로운 객체가 생성되기때문에 메모리 낭비와 성능 저하 등의 문제가 발생할 수 있다.  
+단 위와 같이 하게 될경우 새로운 객체가 생성되기때문에 메모리 낭비와 성능 저하 등의 문제가 발생할 수 있다.
+
+
+# 함수  
+
+## 함수의 구조  
+
+
+```kotlin
+visibilityModifier fun functionName(parameter1: DataType,,,): return Type { }
+```  
+- example  
+
+
+```kotlin
+private fun airPollutionSate(fineDust: Int): String {
+    val airCondition = when (fineDust) {
+        10 -> "최고"
+        20 -> "양호"
+        30 -> "나쁨"
+        100 -> "최악"
+        in 101..130 -> "외출금지"
+        else -> "측정불가"
+    }
+    return airCondition
+}
+```
+
+## 함수 리팩터링
+
+```kotlin
+val skyVisible = isFresh && fineDUst < 30 || !isChina 
+val skyColor = if (skyVisible) "Blue" else "Yellow" 
+```
+
+위의 두 변수들을 함수로 리팩터링을 진행한다.  
+
+```kotlin
+private fun getCurrentSkyColor(isFresh: Boolean, fineDust: Int, isChina: Boolean): String {
+    val skyVisible = isFresh && fineDust < 30 || !isChina
+    val skyColor = if (skyVisible) "Blue" else "Yellow"
+    
+    return skyColor
+}
+```  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
