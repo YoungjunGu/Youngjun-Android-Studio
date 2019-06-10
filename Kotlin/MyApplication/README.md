@@ -146,48 +146,8 @@ data = "String형 자료로!"
 단 위와 같이 하게 될경우 새로운 객체가 생성되기때문에 메모리 낭비와 성능 저하 등의 문제가 발생할 수 있다.
 
 
-# 함수  
-
-## 함수의 구조  
 
 
-```kotlin
-visibilityModifier fun functionName(parameter1: DataType,,,): return Type { }
-```  
-- example  
-
-
-```kotlin
-private fun airPollutionSate(fineDust: Int): String {
-    val airCondition = when (fineDust) {
-        10 -> "최고"
-        20 -> "양호"
-        30 -> "나쁨"
-        100 -> "최악"
-        in 101..130 -> "외출금지"
-        else -> "측정불가"
-    }
-    return airCondition
-}
-```
-
-## 함수 리팩터링
-
-```kotlin
-val skyVisible = isFresh && fineDUst < 30 || !isChina 
-val skyColor = if (skyVisible) "Blue" else "Yellow" 
-```
-
-위의 두 변수들을 함수로 리팩터링을 진행한다.  
-
-```kotlin
-private fun getCurrentSkyColor(isFresh: Boolean, fineDust: Int, isChina: Boolean): String {
-    val skyVisible = isFresh && fineDust < 30 || !isChina
-    val skyColor = if (skyVisible) "Blue" else "Yellow"
-    
-    return skyColor
-}
-```  
 
 
 
