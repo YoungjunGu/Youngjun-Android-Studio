@@ -4,10 +4,12 @@
 
 - https://medium.com/@limgyumin
 - https://tourspace.tistory.com/category/개발이야기/Kotlin
+- https://medium.com/@limgyumin/코틀린-의-apply-with-let-also-run-은-언제-사용하는가-4a517292df29
 
-## [Koltin Basic](https://github.com/gaki2745/Youngjun-Android-Studio/tree/master/Kotlin/MyApplication)
+## Koltin Basic
 
-- [apply,with,let,also,run](https://medium.com/@limgyumin/코틀린-의-apply-with-let-also-run-은-언제-사용하는가-4a517292df29)  
+- [Basic](https://github.com/gaki2745/Youngjun-Android-Studio/tree/master/Kotlin/MyApplication)
+- [Function & Anonymous](https://github.com/gaki2745/Youngjun-Android-Studio/tree/master/Kotlin/FunctionExam)
 
 </br>
 
