@@ -93,25 +93,28 @@ ANR 과 같은 회피하고 반응성이 좋은 어플리케이션을 만들기 
 
 #### 시간이 많이 걸리는 작업을 UI Thread에서 분리  
 
-```kotlin
+`onDownload()` 함수를 수행하게 되면 내부에서 Thread를 상속하는 Download 인스턴스 객체를 할당하게 되고 start 메서드를 통해 내부 run 함수를 수행하게 된다. 이때 아래의 gif 처럼 버튼의 text를 매순간 바꾸게 하기 위해서 **runOnUiThread**를 사용하였다.  
 
+
+![untitled](https://user-images.githubusercontent.com/33486820/59289904-30110580-8cb2-11e9-94fa-393dd838fbcf.gif)
+
+
+```kotlin
     private fun onDownload() {
         Log.d(TAG, "Press Download Button")
         download = Download()
-        download.isDownloading = true
+        isDownloading = true
         download.start()
 
     }
 
     private fun onCancel() {
         Log.d(TAG, "Press Cancel Button")
-        download.isDownloading = false
+        isDownloading = false
 
     }
 
-    class Download: Thread() {
-        private var TAG = "AndroidThread"
-        var isDownloading = false
+    inner class Download: Thread() {
 
         override fun run() {
             for (i in 0..10) {
@@ -122,17 +125,59 @@ ANR 과 같은 회피하고 반응성이 좋은 어플리케이션을 만들기 
                 try {
                     Thread.sleep(1000)
                     Log.d(TAG, "Downloading .. ${i*10}%" )
+
+                    runOnUiThread {
+                        if(i == 10) {
+                            downloadBtn.text = "COMPLETE"
+                        } else {
+                            downloadBtn.text = "${i*10}..%"
+                        }
+                    }
+
                 } catch (e: InterruptedException) {
                     e.printStackTrace()
                 }
+
             }
+
             isDownloading = false
         }
     }
 ```
 
+TextView,Button,Layout,Color,, 등등 모든 UI에 변경을 요하는 작업은 **runOnUiThread**에서 수행해야한다.  
+위에서 runOnUiThread 람다식을 사용하지 않고 downloadBtn의 text를 변경하려고 시도하면  
+**CalledFromWrongThreadException**이 발생과 동시에 앱은 죽어버린다.  
+이 말을 지격하게 되면 뷰 계층 구조를 만든 원래 Thread 즉 **Main(UI) Thread**만 해당 뷰를 조작할 수 있다는 의미다.  
+
+</br>
+
+안드로이드에서는 UI thread에 접근할 수 있는 몇가지 방법을 제공한다.  
+위에서 본 `runOnUiThread`람다식또한 그 중 하나의 예이다.  
+
+1. **`runOnUiThread`의 람다식 사용**  
+2. **`Handler`** 와 **`Lopper.getMainLopper()`** 이용한 방법  
+3. **`View.post`** 이용한 방법  
 
 
+</br>
+
+## runOnUiThread 사용  
+
+위의 예제에서 보면 
+
+```kotlin
+...
+
+runOnUiThread {
+		if(i == 10) {
+			downloadBtn.text = "COMPLETE"
+		} else {
+			downloadBtn.text = "${i*10}..%"
+		}
+}
+...
+```  
 
 
 
