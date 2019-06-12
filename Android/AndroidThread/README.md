@@ -96,7 +96,7 @@ ANR 과 같은 회피하고 반응성이 좋은 어플리케이션을 만들기 
 `onDownload()` 함수를 수행하게 되면 내부에서 Thread를 상속하는 Download 인스턴스 객체를 할당하게 되고 start 메서드를 통해 내부 run 함수를 수행하게 된다. 이때 아래의 gif 처럼 버튼의 text를 매순간 바꾸게 하기 위해서 **runOnUiThread**를 사용하였다.  
 
 
-![untitled](https://user-images.githubusercontent.com/33486820/59289904-30110580-8cb2-11e9-94fa-393dd838fbcf.gif)
+<img src ="https://user-images.githubusercontent.com/33486820/59289904-30110580-8cb2-11e9-94fa-393dd838fbcf.gif" width = 500>
 
 
 ```kotlin
