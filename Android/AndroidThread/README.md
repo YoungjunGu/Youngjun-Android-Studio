@@ -192,7 +192,113 @@ Runnable r은 UI Thread의 queue에 메시지 형식으로 enqueue가 된다.
 
 1. `post(Runnable)`  
 2. `sendMessageDelayed(Messgage msg, long delayMillis)` 
-3. `sendMessag
+3. `sendMessageAtTime(Message msg, long uptimeMills)
+	- `MessageQueue queue = mQueue;`  
+4. `enqueueMessage(MessageQueue queue, Message msg, long uptimeMills)`  
+
+처음 `startActivity()` 함수를 통해서 MainActivity가 생성되는 과정은 zygotelnit에 의해서 ActivirtThread가 생성된다.  
+ActivityThread는 아래와 같이 **Main Lopper**와 **Handler**를 생성한다.  
+
+</br>
+
+```java
+
+ // frameworks/base/core/java/android/app/ActivityThread.java
+
+public final class ActivityThread {
+
+...
+
+public static void main(String[] args) { 
+
+...
+		Looper.prepareMainLooper(); // 1. UI thread의 루퍼를 생성 
+		ActivityThread thread = new ActivityThread(); 
+		thread.attach();
+
+		if(sMainThreadHandler == null) {     
+			sMainThreadHandler = thread.getHandler(); // 2. 핸들러 설정
+		} 
+		Looper.loop(); // 3. 루퍼 동작 시작
+	}
+
+}
+```  
+
+ActivityThread는 ActivityManagerService와 바인더 통신을 하여 MainActivty를 생성한다.  
+따라서 ActivityThread가 생성한 MainActivity는 ActivityThread에서 생성한 Looper와 Handler를 사용하게된다.  
+`Looper.loop()`을 시작하면 mQueue는 UI Thread의 Looper가 관리하는 queue를 가르킨다.  
+
+</br>
+
+queue에 Messeage형태로 들어한 Runnable 작업은 UI Thread에서 dequeue가 되어 UI Thread상에서 수행된다.  
+
+</br>
+
+## Handler.post() 를 사용하여 제어
+
+```kotlin
+
+    inner class Download: Thread() {
+
+        override fun run() {
+            for (i in 0..10) {
+
+                if(!isDownloading) {
+                    break
+                }
+                try {
+                    SystemClock.sleep(1000)
+                    Log.d(TAG, "Downloading .. ${i*10}%" )
+
+                    var r = Runnable {
+                        downloadBtn.text = "${i*10}%"
+                    }
+                    handler?.postDelayed(r, 1000)
+
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
+
+            }
+
+            isDownloading = false
+        }
+    }
+```
+
+`postDelayed()` 함수에 매개변수로 Runnable action 객체를 전달하여 UI Thread에서 실행된다.  
+
+
+> 참고 post(r: Runnable) 는 delay 없이 바로 Message Queue에 Runnable action을 전달한다.  
+
+
+## View.post() 사용 하여 제어
+
+> kotlin의 view.post()의 자료를 아직 찾지 못해서 java의 View.post를 정리 하겠습니다.  
+
+
+Handler만 쓰는 거와 가장 큰 차이는 attach가 되었는지 여부를 확인 하는 것이다.  
+View에 보여지는 시기에 맟쳐서 실행을 할려면 View.post()를 사용해야한다.  
+View.post()는 attach되지 않으면 post된 모든 runnable들의 실행이 attach 될때까지 연기(postpone)된다.
+
+참고 : https://codetravel.tistory.com/16?category=978866  
+
+
+
+
+</br>
+<hr>
+
+
+## Reference  
+
+- https://codetravel.tistory.com/16?category=978866
+- https://developer.android.com
+- https://academy.realm.io/kr/posts/android-thread-looper-handler/
+
+
+
 
 
 
