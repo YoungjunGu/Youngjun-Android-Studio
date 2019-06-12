@@ -170,14 +170,32 @@ TextView,Button,Layout,Color,, 등등 모든 UI에 변경을 요하는 작업은
 ...
 
 runOnUiThread {
-		if(i == 10) {
-			downloadBtn.text = "COMPLETE"
-		} else {
-			downloadBtn.text = "${i*10}..%"
-		}
+	if(i == 10) {
+		downloadBtn.text = "COMPLETE"
+	} else {
+		downloadBtn.text = "${i*10}..%"
+	}
 }
 ...
 ```  
+
+Android Developer에 설명에는 이렇게 명시가 되어있다.  
+"특정 동작을 UI Thread에서 동작하도록 한다. 만약 현재 Thread가 UI Thread면 그 동작은 **즉시 수행**된다. 하지만 현재 Thread 가 UI Thread가 아니면 필요한 동작을 UI Thread의 **Event Queue로 전달**한다."  
+
+<img width="819" alt="image" src="https://user-images.githubusercontent.com/33486820/59325813-6df84300-8d1f-11e9-9add-0d0d0063fed5.png">  
+
+
+`runOnUiThread()` 함수가 작동하는 것을 코드에서 볼 수 있듯이  runOnUiThread가 실행된 스레드가 UI Thread가 아니므로  
+**mHandler.post(action)** 가 수행된다.  
+Runnable r은 UI Thread의 queue에 메시지 형식으로 enqueue가 된다.  
+후에 queue에 있는 메시지를 꺼내서 UI Thread에서 동작을 수행한다.  
+
+1. `post(Runnable)`  
+2. `sendMessageDelayed(Messgage msg, long delayMillis)` 
+3. `sendMessag
+
+
+
 
 
 
